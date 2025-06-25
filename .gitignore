@@ -50,6 +50,10 @@ ENV/
 env/
 .venv/
 
+
+# config
+.config
+
 # IDEs and editors
 .idea/
 .vscode/
@@ -61,3 +65,11 @@ env/
 
 # Miscellaneous
 .DS_Store
+
+ # Ignore raw and processed data files (usually large and generated)
+data/raw/
+data/processed/
+
+# But keep sample data (if you add any) tracked
+!data/sample/
+utils/config.py
