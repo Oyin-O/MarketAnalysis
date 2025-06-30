@@ -3,22 +3,28 @@ import os
 import time
 import requests
 from datetime import datetime
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from utils.config import GNEWS_API_KEY
 import urllib.parse
 from utils.logger import get_logger
 
 logger = get_logger("fetch_news")
 
-query = '"AI" AND ("NVIDIA" OR "Microsoft" OR "Apple" OR "Meta" OR "Google" OR "Amazon" OR "Tesla" OR "AMD" OR ' \
-        '"Supermicro" OR "Palantir")'
-
-encoded_query = urllib.parse.quote_plus(query)
+# query = '"AI" AND ("NVIDIA" OR "Microsoft" OR "Apple" OR "Meta" OR "Google" OR "Amazon" OR "Tesla" OR "AMD" OR ' \
+#         '"Supermicro" OR "Palantir")'
+#
+# encoded_query = urllib.parse.quote_plus(query)
 
 BASE_URL = "https://gnews.io/api/v4/search"
 MAX_RETRIES = 3
 DEFAULT_WAIT = 10  # seconds
 RETRYABLE_STATUS_CODES = {429, 503}
 
+query = "AI and chips"
 
 def retryable_request(url, params):
     for attempt in range(1, MAX_RETRIES + 1):
@@ -45,7 +51,7 @@ def retryable_request(url, params):
 def fetch_news():
     logger.info("Fetching news ...")
     params = {
-        "q": encoded_query,
+        "q": query,
         "lang": "en",
         "country": 'us',
         "token": GNEWS_API_KEY,
